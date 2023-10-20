@@ -87,9 +87,10 @@ Down below you will get everything you need to know. Explore our playbooks and s
       - [3 - Configure Group Variables:](#3---configure-group-variables)
       - [4 - Running Ansible Modules:](#4---running-ansible-modules)
       - [5 - Running Ansible Playbooks:](#5---running-ansible-playbooks)
-      - [6 - Is REMOTE host user is ROOT?:](#6---is-remote-host-user-is-root)
+      - [6 - Is REMOTE host user ROOT?:](#6---is-remote-host-user-root)
       - [7 - Avoid using plaintext passwords inside the host\_vars for REMOTE authentication:](#7---avoid-using-plaintext-passwords-inside-the-host_vars-for-remote-authentication)
       - [8 - KNOWN Issues \& Bugs:](#8---known-issues--bugs)
+  - [For some reason having programs or packages like `figlet` or even `neofetch` declared in .bashrc or .zshrc on remote hosts, will break ansible connection, remove them or Ansible wont be able to connect without issues. **(ATTENTION)**](#for-some-reason-having-programs-or-packages-like-figlet-or-even-neofetch-declared-in-bashrc-or-zshrc-on-remote-hosts-will-break-ansible-connection-remove-them-or-ansible-wont-be-able-to-connect-without-issues-attention)
   - [Usage](#usage)
   - [About the Author](#about-the-author)
 
@@ -121,9 +122,9 @@ Each playbook is purpose-built to simplify a specific aspect or setup configurat
 ## Dependencies and Requirements  
 
 
-- **Ansible** 2.1+ is required for global use of this repository. <span style="color: red;">(MANDATORY)</span>  
-- **Git** is required to clone the repository.  <span style="color: red;">(MANDATORY)</span>  
-- **OpensSSH** is required ensure that the host running ansible has access to the desired hosts. <span style="color: red;">(MANDATORY)</span>  
+- **Ansible** 2.1+ is required for global use of this repository. **(MANDATORY)**  
+- **Git** is required to clone the repository.  **(MANDATORY)**  
+- **OpensSSH** is required ensure that the host running ansible has access to the desired hosts. **(MANDATORY)**  
 
 
 
@@ -196,8 +197,7 @@ Clone this repository to your home directory, which is configured to work seamle
 
 ## Additional information / Documentation **(MUST READ!!!)**
 
-This section contains additional information on how to configure hosts files and variables, such as the concept of filenames and directory structure.
-
+This section contains crucial information on how to configure hosts files and variables, such as the concept of filenames and directory structure.
 It also contains information about some possible errors you may encounter and their respective fixes.
 
  <br>
@@ -207,56 +207,45 @@ It also contains information about some possible errors you may encounter and th
 By default, the hosts are named as "server1," "server2," and so on. If you wish you can keep these default names. However, if you prefer you can custom host and group names:
 
 - Open the `inventory/hosts.yaml` file.
-- Update the ip address of each host to the one corresponding to your host. <span style="color: red;">(MANDATORY)</span>
-- Update the host and group names to your desired custom names, avoiding symbols like "." or "-".  <span style="color: yellow;">(INFORMATION)</span>
-
+- Update the ip address of each host to the one corresponding to your host. **(MANDATORY)**
+- - Update the host and group names to your desired custom names, avoiding symbols like "." or "-". **(INFORMATION)**
  <br>
 
 #### 2 - Manage Host Variables:
 
-- Each host already has a corresponding file in the `host_vars` directory, located in both the root directory and the `playbooks/host_vars` folder. <span style="color: yellow;">(INFORMATION)</span>
-
-- These files must share the same name as the host you designated in `inventory/hosts.yaml` (e.g., `server1.yaml`, `server2.yaml`). <span style="color: yellow;">(INFORMATION)</span>
-
-- If you modified the default host names in the `inventory/hosts.yaml` file, ensure you rename each file accordingly. <span style="color: yellow;">(INFORMATION)</span>
-
-- Edit the corresponding file (e.g. `host_vars/server1.yaml` or `playbooks/host_vars/server1.yaml`) and add the variables for that host. <span style="color: red;">(MANDATORY)</span>
-
+- Each host already has a corresponding file in the `host_vars` directory, located in both the root directory and the `playbooks/host_vars` folder. **(INFORMATION)**
+- These files must share the same name as the host you designated in `inventory/hosts.yaml` (e.g., `server1.yaml`, `server2.yaml`). **(INFORMATION)**
+- If you modified the default host names in the `inventory/hosts.yaml` file, ensure you rename each file accordingly. **(INFORMATION)**
+- Edit the corresponding file (e.g. `host_vars/server1.yaml` or `playbooks/host_vars/server1.yaml`) and add the variables for that host. **(MANDATORY)**
 - These files can include variables such as login username, SSH port, and other host-specific settings essential for automated host access.
 
  <br>
 
 #### 3 - Configure Group Variables:
 
-- Similarly, each group should have a corresponding file in the `group_vars` directory within both the root directory and the `playbooks/group_vars` folder. <span style="color: yellow;">(INFORMATION)</span>
-
-- The process for naming these files is the same as for host variables (e.g., `group1.yaml`, `group2.yaml`). <span style="color: yellow;">(INFORMATION)</span>
-
-- If you changed the default group names in the `inventory/hosts.yaml` file, make sure to rename each file accordingly. <span style="color: yellow;">(INFORMATION)</span>
-
-- Edit the corresponding file (e.g. `group_vars/group1.yaml` or `playbooks/group_vars/group1.yaml`) and add the common variables for that group if any. <span style="color: red;">(MANDATORY)</span>
-
+- Similarly, each group should have a corresponding file in the `group_vars` directory within both the root directory and the `playbooks/group_vars` folder. **(INFORMATION)**
+- The process for naming these files is the same as for host variables (e.g., `group1.yaml`, `group2.yaml`). **(INFORMATION)**
+- If you changed the default group names in the `inventory/hosts.yaml` file, make sure to rename each file accordingly. **(INFORMATION)**
+- Edit the corresponding file (e.g. `group_vars/group1.yaml` or `playbooks/group_vars/group1.yaml`) and add the common variables for that group if any. **(MANDATORY)**
 - These files can encompass variables such as SSH user, SSH port, SSH private key, and other group-specific settings crucial for automated access to groups with shared configurations like SSH ports and usernames.  
   
   <br>
 
 #### 4 - Running Ansible Modules:
 
-- If you're using the `ansible` command to run modules such as ping or others, make your necessary edits in the files under the `host_vars/` and `group_vars/` directories. <span style="color: yellow;">(INFORMATION)</span>
-
+- If you're using the `ansible` command to run modules such as ping or others, make your necessary edits in the files under the `host_vars/` and `group_vars/` directories. **(INFORMATION)**
  <br>
 
 #### 5 - Running Ansible Playbooks:
 
-- For those using the `ansible-playbook` command, make your edits in the files located under the `playbooks/host_vars/` and `playbooks/group_vars/` directories. <span style="color: yellow;">(INFORMATION)</span>
-
+- For those using the `ansible-playbook` command, make your edits in the files located under the `playbooks/host_vars/` and `playbooks/group_vars/` directories. **(INFORMATION)**
 By following these steps, you'll have the freedom to opt for either default or custom host names and effectively manage your inventory and variables. This approach simplifies the process of automating your Ubuntu server systems with Ansible while ensuring organized and efficient configuration management.  
 
 <br>
 
-#### 6 - Is REMOTE host user is ROOT?: 
+#### 6 - Is REMOTE host user ROOT?: 
 
-If your host user is root, then you'll need to enable root access in /etc/ssh/sshd_config file inside that same host. I recommend setting it to prohibit-password authentication instead of allowing password which poses a security risk. <span style="color: yellow;">(ATTENTION)</span>
+If your host user is root, then you'll need to enable root access in /etc/ssh/sshd_config file inside that same host. I recommend setting it to prohibit-password authentication instead of allowing password which poses a security risk. **(ATTENTION)**
 
 To achieve this just edit your /etc/ssh/sshd_config:
 ```bash
@@ -279,19 +268,22 @@ Note: The id_ansible.pub key should be added to authorized_keys in root .ssh/ fo
 #### 7 - Avoid using plaintext passwords inside the host_vars for REMOTE authentication:
 
 When accessing to your hosts through an ansible module or playbook with sudo powers, it will prompt the user to input password for each host. Which its not acceptable, so, we have some options to solve this problem. 
-- 1st one is the not recommended one, as i said above using plaintext passwords inside the host_vars for REMOTE authentication is a extremely high security risk. 
-- The second one is using ansible-vault to storage and encrypt the user credentials. 
-- The third one and the one we are using is disabling password request for sudo users in the remote system. <span style="color: orange;">(RECOMMENDED)</span>
+
+- 1st one is **not recommended**, as i said above using plaintext passwords inside the host_vars file for REMOTE authentication is an extremely high security risk. 
+
+- The second one is using ansible-vault to storage and encrypt the user credentials. **(RECOMMENDED)** 
+
+- The third one and the one we are using for the sake of simplicity is disabling password request for sudo users in the remote system just for command execution.
 
 To accomplish that, run this command in every remote host you plan to access with Ansible:
 ```bash
 sudo echo "$USER ALL=(ALL) NOPASSWD=ALL" > /etc/sudoers.d/$USER
 ```
+<br>
 
 #### 8 - KNOWN Issues & Bugs:
 
-For some reason having programs or packages like `figlet` or even `neofetch` declared in .bashrc or .zshrc on remote hosts, will break ansible connection, remove them or Ansible wont be able to connect without issues. <span style="color: yellow;">(ATTENTION)</span>
-
+For some reason having programs or packages like `figlet` or even `neofetch` declared in .bashrc or .zshrc on remote hosts, will break ansible connection, remove them or Ansible wont be able to connect without issues. **(ATTENTION)**
 ---
 
 <br>
