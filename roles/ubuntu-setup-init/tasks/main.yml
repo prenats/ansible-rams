@@ -1,0 +1,20 @@
+---
+# Ubuntu-Setup-Init TASKS file for role/ubuntu-setup-init
+- name: Ubuntu System Update and Upgrade
+  apt:
+    update_cache: yes
+  changed_when: false
+  register: update_cache_output
+
+- name: Ubuntu Initial Packages Installation 
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  register: install_packages_output
+
+- name: Display Debug Output
+  debug:
+    var: item
+  loop:
+    - "{{ update_cache_output }}"
+    - "{{ install_packages_output }}"
