@@ -1,0 +1,6 @@
+---
+- name: Check for Pending Updates on Ubuntu
+  hosts: all
+  become: true
+  roles:
+    - ubuntu-check-updates
