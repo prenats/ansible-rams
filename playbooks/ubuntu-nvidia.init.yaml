@@ -1,0 +1,5 @@
+---
+- name: Install NVIDIA driver and CUDA
+  hosts: minerstations
+  roles:
+    - ubuntu-nvidia-init
