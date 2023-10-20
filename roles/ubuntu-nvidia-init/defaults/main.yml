@@ -1,0 +1,8 @@
+---
+# Ubuntu-NVIDIA-Init Defaults Packages to be installed
+nvidia_driver_package: nvidia-driver-535
+cuda_packages:
+  - nvidia-cuda-toolkit
+  - nvidia-cuda-dev
+monitor_packages:
+  - nvtop

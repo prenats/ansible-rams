@@ -1,0 +1,43 @@
+---
+# Ubuntu-NVIDIA-Init Tasks
+- name: Checking if NVIDIA driver is installed
+  command: dpkg -l | grep nvidia
+  register: nvidia_check
+  changed_when: false
+
+- name: Removing existing NVIDIA driver
+  apt:
+    name:
+      - nvidia-*
+    state: absent
+  when: nvidia_check.rc == 0
+  register: remove_nvidia_driver_output
+
+- name: Installing NVIDIA Driver
+  apt:
+    name: "{{ nvidia_driver_package }}"
+    state: present
+  register: install_nvidia_driver_output
+
+- name: Installing CUDA toolkit
+  apt:
+    name: "{{ cuda_packages }}"
+    state: present
+  register: install_cuda_toolkit_output
+
+- name: Installing Monitoring packages
+  apt:
+    name: "{{ monitor_packages }}"
+    state: present
+  register: install_nvtop_output
+
+- name: Display Debug Output
+  debug:
+    var: item
+  loop:
+    - "{{ nvidia_check }}"
+    - "{{ remove_nvidia_driver_output }}"
+    - "{{ install_nvidia_driver_output }}"
+    - "{{ install_cuda_toolkit_output }}"
+    - "{{ install_nvtop_output }}"
+
