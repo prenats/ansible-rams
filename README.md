@@ -88,7 +88,7 @@ Down below you will get everything you need to know. Explore our playbooks and s
       - [4 - Running Ansible Modules:](#4---running-ansible-modules)
       - [5 - Running Ansible Playbooks:](#5---running-ansible-playbooks)
       - [6 - Is REMOTE host user ROOT?:](#6---is-remote-host-user-root)
-      - [7 - Avoid using plaintext passwords inside the host\_vars for REMOTE authentication:](#7---avoid-using-plaintext-passwords-inside-the-host_vars-for-remote-authentication)
+      - [7 - **AVOID** plaintext passwords for REMOTE sudo executions:](#7---avoid-plaintext-passwords-for-remote-sudo-executions)
       - [8 - KNOWN Issues \& Bugs:](#8---known-issues--bugs)
   - [Usage](#usage)
   - [About the Author](#about-the-author)
@@ -265,7 +265,7 @@ Note: The id_ansible.pub key should be added to authorized_keys in root .ssh/ fo
 
 <br>
 
-#### 7 - Avoid using plaintext passwords inside the host_vars for REMOTE authentication:
+#### 7 - **AVOID** plaintext passwords for REMOTE sudo executions:
 
 When accessing to your hosts while executing an ansible module or playbook with sudo powers, it will prompt the user to input password for each remote host. Which its not acceptable, so, we have some options to solve this problem. 
 
@@ -273,9 +273,10 @@ When accessing to your hosts while executing an ansible module or playbook with 
 
 - The second one is using ansible-vault to storage and encrypt the user credentials. **(RECOMMENDED)** 
 
-- The third one and the one we are using for the sake of simplicity is disabling password request for sudo users in the remote system just for command execution, logins on those machines still ask for password.
+- The third one and the one we are using for the sake of simplicity is disabling password request for sudo users in the remote system just for command execution, logins on those machines still ask for password. 
 
 To accomplish that, run this command in every remote host you plan to access with Ansible:
+
 ```bash
 sudo echo "$USER ALL=(ALL) NOPASSWD=ALL" > /etc/sudoers.d/$USER
 ```
