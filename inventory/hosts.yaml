@@ -1,0 +1,18 @@
+all:
+  hosts:
+    server1:
+      ansible_host: 10.0.0.10
+    server2:
+      ansible_host: 10.0.0.11
+    server3:
+      ansible_host: 10.0.0.12
+    server4:
+      ansible_host: 10.0.0.13
+  children:
+    global1:
+      hosts:
+        server1:
+        server2:
+    global2:
+        server3:
+        server4:
