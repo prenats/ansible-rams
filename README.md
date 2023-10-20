@@ -104,9 +104,9 @@ Down below you will get everything you need to know. Explore our playbooks and s
 
 <br>
 
-1 - [**ubuntu-check-updates**](roles/ubuntu-check-updates/README.md) - Role Description: Check hosts for any pending updates, and list them to the user in console.  
-2 - [**ubuntu-setup-init**](roles/ubuntu-setup-init/README.md) - Role Description: Automated initial setup and package installation for Ubuntu-based systems.  
-3 - [**ubuntu-nvidia-init**](roles/ubuntu-nvidia-init/README.md) - Role Description: Automated setup for Nvidia GPU drivers and tools on Ubuntu-based systems.
+1 - [**ubuntu-check-updates**](roles/ubuntu-check-updates/README.md) - Check hosts for any pending updates, and list them to the user in console.  
+2 - [**ubuntu-setup-init**](roles/ubuntu-setup-init/README.md) - Automated initial setup and package installation for Ubuntu-based systems.  
+3 - [**ubuntu-nvidia-init**](roles/ubuntu-nvidia-init/README.md) - Automated setup for Nvidia GPU drivers and tools on Ubuntu-based systems.
 
 ---
 
@@ -124,7 +124,8 @@ Each playbook is purpose-built to simplify a specific aspect or setup configurat
 
 - **Ansible** 2.1+ is required for global use of this repository. **(MANDATORY)**  
 - **Git** is required to clone the repository.  **(MANDATORY)**  
-- **OpensSSH** is required ensure that the host running ansible has access to the desired hosts. **(MANDATORY)**  
+- **OpensSSH** Must be installed and running on ansible host, and remote ones. **(MANDATORY)**  
+
 
 
 
@@ -204,11 +205,11 @@ It also contains information about some possible errors you may encounter and th
 
 #### 1 - Configure Host Inventory:
 
-By default, the hosts are named as "server1," "server2," and so on. If you wish you can keep these default names. However, if you prefer you can custom host and group names:
+By default, the hosts are named as "server1," "server2," and so on. If you wish you can keep these default names. However, if you prefer you can custom host and group names, here some relevant information:
 
 - Open the `inventory/hosts.yaml` file.
-- Update the ip address of each host to the one corresponding to your host. **(MANDATORY)**
-- - Update the host and group names to your desired custom names, avoiding symbols like "." or "-". **(INFORMATION)**
+- Update the ip address of each host to the one corresponding to your hosts. **(MANDATORY)**
+- Update the host and group names to your desired custom names, avoiding symbols like "." or "-". **(INFORMATION)**
  <br>
 
 #### 2 - Manage Host Variables:
@@ -245,7 +246,7 @@ By following these steps, you'll have the freedom to opt for either default or c
 
 #### 6 - Is REMOTE host user ROOT?: 
 
-If your host user is root, then you'll need to enable root access in /etc/ssh/sshd_config file inside that same host. I recommend setting it to prohibit-password authentication instead of allowing password which poses a security risk. **(ATTENTION)**
+If your remote host user is root, then you'll need to enable root access in /etc/ssh/sshd_config file inside that same host. I recommend setting it to prohibit-password authentication instead of allowing password which poses a security risk. **(ATTENTION)**
 
 To achieve this just edit your /etc/ssh/sshd_config:
 ```bash
@@ -267,13 +268,13 @@ Note: The id_ansible.pub key should be added to authorized_keys in root .ssh/ fo
 
 #### 7 - Avoid using plaintext passwords inside the host_vars for REMOTE authentication:
 
-When accessing to your hosts through an ansible module or playbook with sudo powers, it will prompt the user to input password for each host. Which its not acceptable, so, we have some options to solve this problem. 
+When accessing to your hosts while executing an ansible module or playbook with sudo powers, it will prompt the user to input password for each remote host. Which its not acceptable, so, we have some options to solve this problem. 
 
-- 1st one is **not recommended**, as i said above using plaintext passwords inside the host_vars file for REMOTE authentication is an extremely high security risk. 
+- 1st one is **not recommended**, as i said above using plaintext passwords inside the host_vars host file using `ansible_become_pass: "plaintextpassword"` for REMOTE authentication which is an extremely high security risk. **(Lazy&DANGEROUS)**
 
 - The second one is using ansible-vault to storage and encrypt the user credentials. **(RECOMMENDED)** 
 
-- The third one and the one we are using for the sake of simplicity is disabling password request for sudo users in the remote system just for command execution.
+- The third one and the one we are using for the sake of simplicity is disabling password request for sudo users in the remote system just for command execution, logins on those machines still ask for password.
 
 To accomplish that, run this command in every remote host you plan to access with Ansible:
 ```bash
