@@ -1,0 +1,5 @@
+ansible_user: root
+ansible_become: yes
+ansible_become_method: sudo
+ansible_ssh_private_key_file: ~/.ssh/id_proxmox
+ansible_port: 22
