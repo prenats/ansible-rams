@@ -1,0 +1,9 @@
+
+---
+- name: Check for pending updates
+  command: apt list --upgradable
+  register: pending_updates
+  changed_when: false
+- name: Print pending System updates
+  debug:
+    msg: "{{ pending_updates }}"
