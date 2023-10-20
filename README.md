@@ -90,7 +90,6 @@ Down below you will get everything you need to know. Explore our playbooks and s
       - [6 - Is REMOTE host user ROOT?:](#6---is-remote-host-user-root)
       - [7 - Avoid using plaintext passwords inside the host\_vars for REMOTE authentication:](#7---avoid-using-plaintext-passwords-inside-the-host_vars-for-remote-authentication)
       - [8 - KNOWN Issues \& Bugs:](#8---known-issues--bugs)
-  - [For some reason having programs or packages like `figlet` or even `neofetch` declared in .bashrc or .zshrc on remote hosts, will break ansible connection, remove them or Ansible wont be able to connect without issues. **(ATTENTION)**](#for-some-reason-having-programs-or-packages-like-figlet-or-even-neofetch-declared-in-bashrc-or-zshrc-on-remote-hosts-will-break-ansible-connection-remove-them-or-ansible-wont-be-able-to-connect-without-issues-attention)
   - [Usage](#usage)
   - [About the Author](#about-the-author)
 
@@ -285,6 +284,7 @@ sudo echo "$USER ALL=(ALL) NOPASSWD=ALL" > /etc/sudoers.d/$USER
 #### 8 - KNOWN Issues & Bugs:
 
 For some reason having programs or packages like `figlet` or even `neofetch` declared in .bashrc or .zshrc on remote hosts, will break ansible connection, remove them or Ansible wont be able to connect without issues. **(ATTENTION)**
+
 ---
 
 <br>
