@@ -1,0 +1,5 @@
+---
+- name: Initialize Ubuntu System
+  hosts: all
+  roles:
+    - ubuntu-setup-init
