@@ -18,6 +18,11 @@ packages:
   - tmux
   - python3
   - python3-pip
-  - python3.10-venv
-  - update-notifier-common
   - tree
+  - fail2ban
+  - ntpdate
+  - plocate
+  - duf
+  - net-tools
+  - smartmontools
+  - sysstat

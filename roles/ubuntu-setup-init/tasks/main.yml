@@ -1,10 +1,17 @@
----
-# Ubuntu-Setup-Init TASKS file for role/ubuntu-setup-init
-- name: Ubuntu System Update and Upgrade
+- name: Ubuntu System Update
   apt:
     update_cache: yes
   changed_when: false
   register: update_cache_output
+
+- name: Upgrade All Packages
+  apt:
+    upgrade: dist
+  register: upgrade_cache_output
+
+- name: Clean Up Package Cache
+  apt:
+    autoclean: yes
 
 - name: Ubuntu Initial Packages Installation 
   apt:
@@ -17,4 +24,5 @@
     var: item
   loop:
     - "{{ update_cache_output }}"
+    - "{{ upgrade_cache_output }}"
     - "{{ install_packages_output }}"
