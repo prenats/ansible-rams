@@ -1,0 +1,36 @@
+---
+- name: Configure SSH on Remote Hosts
+  hosts: all
+  gather_facts: true
+  roles:
+    - ubuntu-ssh-config
+
+  vars_prompt:
+    - name: ssh_port
+      prompt: "Enter SSH Port : "
+      private: false
+      default: "{{ ssh_port }}"
+    - name: permit_root_login
+      prompt: "PermitRootLogin (yes false/prohibit-password) :"
+      private: false
+      default: "{{ permit_root_login }}"
+    - name: pubkey_authentication
+      prompt: "PubkeyAuthentication (yes false) :"
+      private: false
+      default: "{{ pubkey_authentication }}"
+    - name: permit_empty_passwords
+      prompt: "PermitEmptyPasswords (yes false) :"
+      private: false
+      default: "{{ permit_empty_passwords }}"
+    - name: allow_password_login
+      prompt: "PasswordAuthentication (yes false) :"
+      private: false
+      default: "{{ allow_password_login }}"
+    - name: kerberos_authentication
+      prompt: "KerberosAuthentication (yes false) :"
+      private: false
+      default: "{{ kerberos_authentication }}"
+    - name: gssapi_authentication
+      prompt: "GSSAPI Authentication (yes false) :"
+      private: false
+      default: "{{ gssapi_authentication }}"
