@@ -1,0 +1,8 @@
+---
+ssh_port: 22
+permit_root_login: prohibit-password
+pubkey_authentication: "yes"
+permit_empty_passwords: "no"
+allow_password_login: "yes"
+kerberos_authentication: "no"
+gssapi_authentication: "no"

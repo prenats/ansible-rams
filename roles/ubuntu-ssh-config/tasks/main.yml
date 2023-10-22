@@ -1,0 +1,36 @@
+---
+
+- name: Create a Backup of sshd_config file
+  command: cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+  register: backup_created
+  changed_when: false
+
+
+- name: Update SSH Configuration in sshd_config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    backrefs: yes
+    regexp: '^#?{{ item.option }}[ \t]+'
+    line: '{{ item.option }} {{ item.value }}'
+  loop:
+    - { option: 'Port', value: '{{ ssh_port }}' }
+    - { option: 'PermitRootLogin', value: '{{ permit_root_login }}' }
+    - { option: 'PubkeyAuthentication', value: '{{ pubkey_authentication }}' }
+    - { option: 'PermitEmptyPasswords', value: '{{ permit_empty_passwords }}' }
+    - { option: 'PasswordAuthentication', value: '{{ allow_password_login }}' }
+    - { option: 'KerberosAuthentication', value: '{{ kerberos_authentication }}' }
+    - { option: 'GSSAPIAuthentication', value: '{{ gssapi_authentication }}' }
+  notify: Restart SSH Service
+  
+- name: Show Changed Settings
+  debug:
+    var: item
+  loop:
+    - "SSH Port: {{ ssh_port }}"
+    - "PermitRootLogin: {{ permit_root_login }}"
+    - "PubkeyAuthentication: {{ pubkey_authentication }}"
+    - "PermitEmptyPasswords: {{ permit_empty_passwords }}"
+    - "PasswordAuthentication: {{ allow_password_login }}"
+    - "KerberosAuthentication: {{ kerberos_authentication }}"
+    - "GSSAPIAuthentication: {{ gssapi_authentication }}"
